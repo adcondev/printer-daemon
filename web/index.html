@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cliente de Impresión</title>
+    <!-- Contenido de estilo -->
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+
+
+<h1>Panel de Impresión</h1>
+
+<div>
+    Estado: <span class="disconnected" id="status">Desconectado</span>
+</div>
+
+<div>
+    <h3>Texto a imprimir:</h3>
+    <label for="textContent"></label><textarea id="textContent" placeholder="Escriba el texto aquí...">
+TICKET DE PRUEBA
+================
+Fecha: 2025-01-15
+Hora: 10:30:00
+
+Producto 1     $10.00
+Producto 2     $20.00
+----------------
+TOTAL:         $30.00
+
+Gracias por su compra!
+        </textarea>
+</div>
+
+<div>
+    <button disabled id="btnPrint">Imprimir</button>
+    <button disabled id="btnPrintAndCut">Imprimir y Cortar</button>
+</div>
+
+<div id="log">
+    <div class="log-entry log-info">Esperando conexión...</div>
+</div>
+
+<script src="static/js/client.js"></script>
+</body>
+</html>
