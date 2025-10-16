@@ -1,11 +1,18 @@
 package main
 
 import (
+	"context"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"os/signal"
 	"sync"
+	"syscall"
 	"time"
+
+	"github.com/adcondev/printer-daemon/internal/devices"
 
 	"github.com/gorilla/websocket"
 )
@@ -86,7 +93,7 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 	welcome := Response{
 		Tipo:    "info",
 		Success: true,
-		Message: "Connected to printer server",
+		Message: "Connected to devices server",
 	}
 	err = conn.WriteJSON(welcome)
 	if err != nil {
@@ -114,6 +121,12 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 
 		// Procesar trabajo de impresión
 		startTime := time.Now()
+		log.Println("[INIT] Starting Printer Daemon")
+		printer, err := devices.NewECPM80250()
+		if err != nil {
+			log.Printf("[ERROR] Failed to initialize devices: %v", err)
+		}
+		devices.PrintFromWs(job.Texto, job.Cortar, printer)
 		err = processPrintJob(job)
 		duration := time.Since(startTime)
 
@@ -164,5 +177,45 @@ func main() {
 
 	log.Printf("[START] Server listening on %s", listenAddr)
 	log.Printf("[INFO] Open http://localhost%s in your browser", listenAddr)
-	log.Fatal(http.ListenAndServe(listenAddr, nil))
+
+	server := &http.Server{
+		Addr:    listenAddr,
+		Handler: nil, // usa DefaultServeMux
+	}
+
+	go func() {
+		if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+			log.Fatalf("[FATAL] ListenAndServe: %v", err)
+		}
+	}()
+
+	// esperar señal Ctrl+C
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
+	<-stop
+	log.Printf("[SHUTDOWN] Signal received, shutting down...")
+
+	// contexto con timeout para graceful shutdown
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	if err := server.Shutdown(ctx); err != nil {
+		log.Printf("[ERROR] Server Shutdown Failed: %v", err)
+	} else {
+		log.Printf("[SHUTDOWN] HTTP server stopped")
+	}
+
+	// cerrar clientes WebSocket activos
+	clientsMutex.Lock()
+	for conn := range clients {
+		_ = conn.WriteMessage(
+			websocket.CloseMessage,
+			websocket.FormatCloseMessage(websocket.CloseNormalClosure, "server shutting down"),
+		)
+		_ = conn.Close()
+		delete(clients, conn)
+	}
+	clientsMutex.Unlock()
+
+	log.Printf("[SHUTDOWN] All websocket clients closed, exiting")
 }

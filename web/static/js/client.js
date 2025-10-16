@@ -1,5 +1,5 @@
 // Actualiza esto para que coincida con el endpoint WebSocket de tu servidor
-const WS_URL = 'ws://localhost:8766/ws';
+const WS_URL = "ws://192.168.8.76:8766/ws"
 let socket = null;
 let isConnected = false;
 
