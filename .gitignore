@@ -22,6 +22,8 @@
 !*.css
 !*.js
 
+!docs/*.md
+
 !Taskfile.yml
 
 # ...even if they are in subdirectories
