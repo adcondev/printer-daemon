@@ -15,7 +15,7 @@ type DocumentoPago struct {
 
 // Pago representa una forma de pago utilizada en el ticket
 type Pago struct {
-	FormaPago     string    `json:"forma_pago"`
-	Cantidad      FloatFlex `json:"cantidad"`
-	Identificador string    `json:"forma_pago_identificador"`
+	FormaPago              string    `json:"forma_pago"`
+	Cantidad               FloatFlex `json:"cantidad"`
+	FormaPagoIdentificador string    `json:"forma_pago_identificador"`
 }

@@ -37,6 +37,10 @@ func (b *BoolFlex) UnmarshalJSON(data []byte) error {
 	return fmt.Errorf("no se pudo deserializar BoolFlex: %s", string(data))
 }
 
+func (b *BoolFlex) MarshalJSON() ([]byte, error) {
+	return json.Marshal(bool(*b))
+}
+
 // IntFlex permite deserializar valores enteros flexibles
 type IntFlex int
 
@@ -68,6 +72,10 @@ func (i *IntFlex) UnmarshalJSON(data []byte) error {
 	}
 
 	return fmt.Errorf("no se pudo deserializar IntFlex: %s", string(data))
+}
+
+func (i *IntFlex) MarshalJSON() ([]byte, error) {
+	return json.Marshal(int(*i))
 }
 
 // FloatFlex permite deserializar valores flotantes que pueden venir como números o strings

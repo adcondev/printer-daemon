@@ -8,13 +8,15 @@ type TicketTemplate struct {
 // TicketTemplateData representa la configuración para la impresión de tickets
 type TicketTemplateData struct {
 	// Configuración de dimensiones y tamaños
-	TicketWidth     IntFlex `json:"ticket_width,string"`      // Ancho del ticket en caracteres
-	RazonSocialSize int     `json:"razon_social_size,string"` // Tamaño de la razón social
-	DatosSize       int     `json:"datos_size,string"`        // Tamaño de los datos generales
-	LogoWidth       int     `json:"logo_width,string"`        // Ancho del logotipo
+	TicketWidth     IntFlex `json:"ticket_width"`      // Ancho del ticket en caracteres
+	RazonSocialSize IntFlex `json:"razon_social_size"` // Tamaño de la razón social
+	DatosSize       IntFlex `json:"datos_size"`        // Tamaño de los datos generales
+
+	// Configuración del logo
+	LogoWidth   IntFlex  `json:"logo_width"`   // Ancho del logotipo
+	VerLogotipo BoolFlex `json:"ver_logotipo"` // Mostrar logotipo
 
 	// Elementos visibles - cabecera
-	VerLogotipo      BoolFlex `json:"ver_logotipo"`       // Mostrar logotipo
 	VerNombre        BoolFlex `json:"ver_nombre"`         // Mostrar nombre del negocio
 	VerNombreC       BoolFlex `json:"ver_nombre_c"`       // Mostrar nombre comercial
 	VerRFC           BoolFlex `json:"ver_rfc"`            // Mostrar RFC
@@ -42,17 +44,6 @@ type TicketTemplateData struct {
 	CambiarReclamacion string `json:"cambiar_reclamacion"` // Texto para reclamaciones
 	CambiarPie         string `json:"cambiar_pie"`         // Texto personalizado de pie
 
-	// Configuración del logo
-	Logo `json:"logo,omitempty"`
-
+	// Ver serie
 	VerSeries BoolFlex `json:"ver_series"`
-}
-
-// Logo representa la configuración de un logotipo para impresión
-type Logo struct {
-	Path       string `json:"path"`        // Ruta al archivo del logo
-	Width      int    `json:"width"`       // Ancho deseado en píxeles
-	Height     int    `json:"height"`      // Alto deseado en píxeles
-	DoubleSize bool   `json:"double_size"` // Si se imprime a doble tamaño
-	Alignment  string `json:"alignment"`   // left, center, right
 }

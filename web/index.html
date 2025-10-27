@@ -97,117 +97,435 @@ PRESENTAR SU TICKET DE COMPRAS</textarea>
 <div class="section">
     <h2>🎫 Datos del Ticket</h2>
 
-    <fieldset>
-        <legend>Información General</legend>
-        <div class="form-row">
-            <div class="form-group">
-                <label for="ticketFolio">Folio:</label>
-                <input type="text" id="ticketFolio" value="326">
-            </div>
-            <div class="form-group">
-                <label for="ticketSerie">Serie:</label>
-                <input type="text" id="ticketSerie" value="ABC1">
-            </div>
-            <div class="form-group">
-                <label for="ticketFecha">Fecha:</label>
-                <input type="text" id="ticketFecha" value="16/07/2025 12:18:18">
-            </div>
-            <div class="form-group">
-                <label for="ticketVendedor">Vendedor:</label>
-                <input type="text" id="ticketVendedor" value="S0001">
-            </div>
-        </div>
-    </fieldset>
+    <!-- Navegación de pestañas -->
+    <div class="tab-navigation">
+        <button class="tab-button active" data-tab="general">General</button>
+        <button class="tab-button" data-tab="cliente">Cliente</button>
+        <button class="tab-button" data-tab="sucursal">Sucursal</button>
+        <button class="tab-button" data-tab="montos">Montos</button>
+        <button class="tab-button" data-tab="conceptos">Conceptos</button>
+        <button class="tab-button" data-tab="pagos">Pagos</button>
+        <button class="tab-button" data-tab="adicional">Adicional</button>
+    </div>
 
-    <fieldset>
-        <legend>Cliente</legend>
-        <div class="form-row">
-            <div class="form-group">
-                <label for="ticketClienteNombre">Nombre:</label>
-                <input type="text" id="ticketClienteNombre" value="PÚBLICO EN GENERAL">
-            </div>
-            <div class="form-group">
-                <label for="ticketClienteRFC">RFC:</label>
-                <input type="text" id="ticketClienteRFC" value="XAXX010101000">
-            </div>
-            <div class="form-group">
-                <label for="ticketClienteCP">C.P.:</label>
-                <input type="text" id="ticketClienteCP" value="82000">
-            </div>
-            <div class="form-group">
-                <label for="ticketClienteEmail">Email:</label>
-                <input type="text" id="ticketClienteEmail" value="jrodriguez@red2000.mx">
-            </div>
+    <!-- Contenido de las pestañas -->
+    <div class="tab-content">
+        <!-- Pestaña General -->
+        <div id="general" class="tab-pane active">
+            <fieldset>
+                <legend>Información General</legend>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketIdentificador">Identificador:</label>
+                        <input type="text" id="ticketIdentificador" value="NTQ3">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketSerieIdentificador">Serie Identificador:</label>
+                        <input type="text" id="ticketSerieIdentificador" value="MA==">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketFolio">Folio:</label>
+                        <input type="text" id="ticketFolio" value="326">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketSerie">Serie:</label>
+                        <input type="text" id="ticketSerie" value="ABC1">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketFecha">Fecha:</label>
+                        <input type="text" id="ticketFecha" value="16/07/2025 12:18:18">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketVendedor">Vendedor:</label>
+                        <input type="text" id="ticketVendedor" value="S0001">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketVendedorIdentificador">Vendedor ID:</label>
+                        <input type="text" id="ticketVendedorIdentificador" value="Ng==">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketSucursal">Sucursal ID:</label>
+                        <input type="text" id="ticketSucursal" value="S0001">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketTipoOperacion">Tipo Operación:</label>
+                        <select id="ticketTipoOperacion">
+                            <option value="NOTA_VENTA" selected>Nota de Venta</option>
+                            <option value="FACTURA">Factura</option>
+                            <option value="COTIZACION">Cotización</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketMetodoPago">Método de Pago:</label>
+                        <input type="text" id="ticketMetodoPago" value="PUE">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketAlmacenId">Almacén ID:</label>
+                        <input type="text" id="ticketAlmacenId" value="5">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketTipoConversionFactura">Tipo Conv. Factura:</label>
+                        <input type="text" id="ticketTipoConversionFactura" value="0">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="ticketAnulada">
+                            Anulada
+                        </label>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="ticketEnviada">
+                            Enviada
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
         </div>
-    </fieldset>
 
-    <fieldset>
-        <legend>Sucursal</legend>
-        <div class="form-row">
-            <div class="form-group">
-                <label for="ticketSucursalNombre">Nombre:</label>
-                <input type="text" id="ticketSucursalNombre" value="ESCUELA KEMPER URGATE">
-            </div>
-            <div class="form-group">
-                <label for="ticketSucursalNombreComercial">Nombre Comercial:</label>
-                <input type="text" id="ticketSucursalNombreComercial" value="LA RAZÓN">
-            </div>
-            <div class="form-group">
-                <label for="ticketSucursalRFC">RFC:</label>
-                <input type="text" id="ticketSucursalRFC" value="EKU9003173C9">
-            </div>
-            <div class="form-group">
-                <label for="ticketSucursalTelefono">Teléfono:</label>
-                <input type="text" id="ticketSucursalTelefono" value="982-66-09">
-            </div>
+        <!-- Pestaña Cliente -->
+        <div id="cliente" class="tab-pane">
+            <fieldset>
+                <legend>Datos del Cliente</legend>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketClienteIdentificador">Cliente ID:</label>
+                        <input type="text" id="ticketClienteIdentificador" value="MTU=">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketClienteNombre">Nombre:</label>
+                        <input type="text" id="ticketClienteNombre" value="PÚBLICO EN GENERAL">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketClienteRFC">RFC:</label>
+                        <input type="text" id="ticketClienteRFC" value="XAXX010101000">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketClienteCP">C.P.:</label>
+                        <input type="text" id="ticketClienteCP" value="82000">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketClienteEmail">Email:</label>
+                        <input type="text" id="ticketClienteEmail" value="jrodriguez@red2000.mx">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketClienteUsoCFDI">Uso CFDI:</label>
+                        <input type="text" id="ticketClienteUsoCFDI" value="G03">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketClienteRegimenFiscal">Régimen Fiscal:</label>
+                        <input type="text" id="ticketClienteRegimenFiscal" value="616">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketClienteCalle">Calle:</label>
+                        <input type="text" id="ticketClienteCalle" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketClienteNumeroExterior">Número Ext:</label>
+                        <input type="text" id="ticketClienteNumeroExterior" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketClienteNumeroInterior">Número Int:</label>
+                        <input type="text" id="ticketClienteNumeroInterior" value="">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketClienteColonia">Colonia:</label>
+                        <input type="text" id="ticketClienteColonia" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketClienteLocalidad">Localidad:</label>
+                        <input type="text" id="ticketClienteLocalidad" value="MAZATLÁN">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketClienteDelegacion">Delegación:</label>
+                        <input type="text" id="ticketClienteDelegacion" value="MAZATLÁN">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketClienteEstado">Estado:</label>
+                        <input type="text" id="ticketClienteEstado" value="Sinaloa">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketClientePais">País:</label>
+                        <input type="text" id="ticketClientePais" value="MÉXICO">
+                    </div>
+                </div>
+            </fieldset>
         </div>
-        <div class="form-row">
-            <div class="form-group">
-                <label for="ticketSucursalEmail">Email:</label>
-                <input type="text" id="ticketSucursalEmail" value="lugoman58@gmail.com">
-            </div>
-            <div class="form-group">
-                <label for="ticketSucursalTienda">Tienda:</label>
-                <input type="text" id="ticketSucursalTienda" value="Almacén Principal">
-            </div>
-        </div>
-    </fieldset>
 
-    <fieldset>
-        <legend>Montos</legend>
-        <div class="form-row">
-            <div class="form-group">
-                <label for="ticketTotal">Total:</label>
-                <input type="text" id="ticketTotal" value="234">
-            </div>
-            <div class="form-group">
-                <label for="ticketPagado">Pagado:</label>
-                <input type="text" id="ticketPagado" value="234">
-            </div>
-            <div class="form-group">
-                <label for="ticketCambio">Cambio:</label>
-                <input type="text" id="ticketCambio" value="0">
-            </div>
-            <div class="form-group">
-                <label for="ticketDescuento">Descuento:</label>
-                <input type="text" id="ticketDescuento" value="0">
-            </div>
+        <!-- Pestaña Sucursal -->
+        <div id="sucursal" class="tab-pane">
+            <fieldset>
+                <legend>Datos de la Sucursal</legend>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketSucursalNombre">Razón Social:</label>
+                        <input type="text" id="ticketSucursalNombre" value="ESCUELA KEMPER URGATE">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketSucursalNombreComercial">Nombre Comercial:</label>
+                        <input type="text" id="ticketSucursalNombreComercial" value="LA RAZÓN">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketSucursalRFC">RFC:</label>
+                        <input type="text" id="ticketSucursalRFC" value="EKU9003173C9">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketSucursalCP">C.P.:</label>
+                        <input type="text" id="ticketSucursalCP" value="82050">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketSucursalTienda">Tienda:</label>
+                        <input type="text" id="ticketSucursalTienda" value="Almacén Principal">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketSucursalRegimenClave">Clave Régimen:</label>
+                        <input type="text" id="ticketSucursalRegimenClave" value="601">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketSucursalRegimen">Régimen Fiscal:</label>
+                        <input type="text" id="ticketSucursalRegimen"
+                               value="RÉGIMEN ACTIVIDAD EMPRESARIAL Y PROFESIONAL PERSONA FÍSICA">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketSucursalTelefono">Teléfono:</label>
+                        <input type="text" id="ticketSucursalTelefono" value="982-66-09">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketSucursalEmail">Email:</label>
+                        <input type="text" id="ticketSucursalEmail" value="lugoman58@gmail.com">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketSucursalCalle">Calle:</label>
+                        <input type="text" id="ticketSucursalCalle" value="Ejemplo 31">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketSucursalNumero">Número Ext:</label>
+                        <input type="text" id="ticketSucursalNumero" value="123">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketSucursalNumeroInt">Número Int:</label>
+                        <input type="text" id="ticketSucursalNumeroInt" value="111">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketSucursalColonia">Colonia:</label>
+                        <input type="text" id="ticketSucursalColonia" value="Ejemplo 2">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketSucursalLocalidad">Localidad:</label>
+                        <input type="text" id="ticketSucursalLocalidad" value="MAZATLÁN">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketSucursalMunicipio">Municipio:</label>
+                        <input type="text" id="ticketSucursalMunicipio" value="">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketSucursalEstado">Estado:</label>
+                        <input type="text" id="ticketSucursalEstado" value="Sinaloa">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketSucursalPais">País:</label>
+                        <input type="text" id="ticketSucursalPais" value="MÉXICO">
+                    </div>
+                </div>
+            </fieldset>
         </div>
-    </fieldset>
 
-    <fieldset>
-        <legend>Leyendas</legend>
-        <div class="form-row">
-            <div class="form-group">
-                <label for="ticketLeyenda1">Leyenda 1:</label>
-                <input type="text" id="ticketLeyenda1" value="¡GRACIAS POR SU COMPRA!">
-            </div>
-            <div class="form-group">
-                <label for="ticketLeyenda2">Leyenda 2:</label>
-                <input type="text" id="ticketLeyenda2" value="Desarrollado por Red2000">
-            </div>
+        <!-- Pestaña Montos -->
+        <div id="montos" class="tab-pane">
+            <fieldset>
+                <legend>Montos y Totales</legend>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketCosto">Costo:</label>
+                        <input type="text" id="ticketCosto" value="500">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketCostoBruto">Costo Bruto:</label>
+                        <input type="text" id="ticketCostoBruto" value="234">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketTotal">Total:</label>
+                        <input type="text" id="ticketTotal" value="234">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketSaldo">Saldo:</label>
+                        <input type="text" id="ticketSaldo" value="0">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketPagado">Pagado:</label>
+                        <input type="text" id="ticketPagado" value="234">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketCambio">Cambio:</label>
+                        <input type="text" id="ticketCambio" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketAbonado">Abonado:</label>
+                        <input type="text" id="ticketAbonado" value="">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketDescuento">Descuento:</label>
+                        <input type="text" id="ticketDescuento" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketDescuentoMotivo">Motivo Descuento:</label>
+                        <input type="text" id="ticketDescuentoMotivo" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketDescuentoNotaCredito">Descuento Nota Crédito:</label>
+                        <input type="text" id="ticketDescuentoNotaCredito" value="">
+                    </div>
+                </div>
+            </fieldset>
         </div>
-    </fieldset>
+
+        <!-- Pestaña Conceptos -->
+        <div id="conceptos" class="tab-pane">
+            <fieldset>
+                <legend>Conceptos / Productos</legend>
+                <div class="conceptos-toolbar">
+                    <button type="button" id="btnAddConcepto" class="btn-small btn-add">➕ Agregar Concepto</button>
+                    <button type="button" id="btnClearConceptos" class="btn-small btn-delete">🗑️ Limpiar Todo</button>
+                </div>
+                <div id="conceptosContainer">
+                    <!-- Los conceptos se agregarán dinámicamente aquí -->
+                </div>
+            </fieldset>
+        </div>
+
+        <!-- Pestaña Pagos -->
+        <div id="pagos" class="tab-pane">
+            <fieldset>
+                <legend>Formas de Pago</legend>
+                <div class="pagos-toolbar">
+                    <button type="button" id="btnAddPago" class="btn-small btn-add">➕ Agregar Pago</button>
+                    <button type="button" id="btnClearPagos" class="btn-small btn-delete">🗑️ Limpiar Todo</button>
+                </div>
+                <div id="pagosContainer">
+                    <!-- Los pagos se agregarán dinámicamente aquí -->
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Documentos de Pago</legend>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketDocPagoTotal">Total Documento:</label>
+                        <input type="text" id="ticketDocPagoTotal" value="234">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketDocPagoTipoCambio">Tipo Cambio:</label>
+                        <input type="text" id="ticketDocPagoTipoCambio" value="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketDocPagoSaldo">Saldo Documento:</label>
+                        <input type="text" id="ticketDocPagoSaldo" value="0">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketDocPagoNota">Nota:</label>
+                        <input type="text" id="ticketDocPagoNota" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketDocPagoFecha">Fecha Pago:</label>
+                        <input type="text" id="ticketDocPagoFecha" value="2025-07-16 12:18:18">
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="ticketDocPagoAnulado">
+                            Anulado
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <!-- Pestaña Adicional -->
+        <div id="adicional" class="tab-pane">
+            <fieldset>
+                <legend>Información Adicional</legend>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketComentario">Comentario:</label>
+                        <textarea id="ticketComentario" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketComentarioInterno">Comentario Interno:</label>
+                        <textarea id="ticketComentarioInterno" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketAutofacturaLink">Link Autofactura:</label>
+                        <input type="text" id="ticketAutofacturaLink" value="https://af.capacita.edu.mx/hola-mundo">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketAutofacturaLinkQr">Link QR Autofactura:</label>
+                        <input type="text" id="ticketAutofacturaLinkQr"
+                               value="https://af.capacita.edu.mx/hola-mundo?total=234&fecha=2025-07-16&folio=326">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Leyendas</legend>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticketLeyenda1">Leyenda 1:</label>
+                        <input type="text" id="ticketLeyenda1" value="¡GRACIAS POR SU COMPRA!">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketLeyenda2">Leyenda 2:</label>
+                        <input type="text" id="ticketLeyenda2" value="Desarrollado por Red2000">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Impuestos Globales</legend>
+                <div class="impuestos-toolbar">
+                    <button type="button" id="btnAddImpuestoGlobal" class="btn-small btn-add">➕ Agregar Impuesto
+                    </button>
+                    <button type="button" id="btnClearImpuestosGlobal" class="btn-small btn-delete">🗑️ Limpiar Todo
+                    </button>
+                </div>
+                <div id="impuestosGlobalContainer">
+                    <!-- Los impuestos globales se agregarán dinámicamente aquí -->
+                </div>
+            </fieldset>
+        </div>
+    </div>
 
     <button id="btnSendTicket" disabled>Enviar Datos del Ticket</button>
 </div>

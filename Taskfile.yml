@@ -13,5 +13,7 @@ tasks:
 
   run:
     cmds:
+      - echo "Pruebas..."
+      - go test ./...
       - echo "Levantando Servidor..."
       - go run ./cmd/printer-daemon
