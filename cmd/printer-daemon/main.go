@@ -1,3 +1,4 @@
+// Package principal del servidor WebSocket para el daemon de impresión de tickets POS.
 package main
 
 import (
@@ -18,6 +19,7 @@ import (
 	"github.com/gorilla/websocket"
 
 	"github.com/adcondev/printer-daemon/internal/models"
+	"github.com/adcondev/printer-daemon/internal/service"
 )
 
 // Configuración global
@@ -25,7 +27,7 @@ var (
 	listenAddr = ":8766"
 
 	upgrader = websocket.Upgrader{
-		CheckOrigin: func(r *http.Request) bool {
+		CheckOrigin: func(_ *http.Request) bool {
 			return true // Permitir todos los orígenes en desarrollo
 		},
 		ReadBufferSize:  1024,
@@ -34,6 +36,9 @@ var (
 
 	clients      = make(map[*websocket.Conn]bool)
 	clientsMutex sync.Mutex
+
+	// Variable global para el servicio de impresión
+	ticketPrinter *service.TicketPrinter
 )
 
 // Message representa el mensaje recibido del cliente WebSocket
@@ -50,8 +55,8 @@ type Response struct {
 }
 
 // printSeparator imprime un separador visual en la consola
-func printSeparator(char string, length int) {
-	fmt.Println(strings.Repeat(char, length))
+func printSeparator(char string, _ int) {
+	fmt.Println(strings.Repeat(char, 80))
 }
 
 // printHeader imprime un encabezado para los mensajes
@@ -80,12 +85,28 @@ func processConfig(rawData json.RawMessage) error {
 		return fmt.Errorf("error parseando config: %w", err)
 	}
 
+	// Inicializar servicio de impresión con el nombre de la impresora
+	if ticketPrinter != nil {
+		err := ticketPrinter.Close()
+		if err != nil {
+			return err
+		} // Cerrar conexión anterior si existe
+	}
+
+	ticketPrinter, err = service.NewTicketPrinter(config.Printer)
+	if err != nil {
+		return fmt.Errorf("error inicializando impresora: %w", err)
+	}
+
+	log.Printf("✅ Impresora %s configurada correctamente", config.Printer)
+
 	// Mostrar datos parseados
 	fmt.Println("\n🔹 DATOS PARSEADOS:")
 	fmt.Printf("  Impresora:    %s\n", config.Printer)
 	fmt.Printf("  Debug Log:    %v\n", config.DebugLog)
 
 	printSeparator("-", 80)
+
 	return nil
 }
 
@@ -105,6 +126,14 @@ func processTemplate(rawData json.RawMessage) error {
 	template, err := models.BytesToTicketTemplate(rawData)
 	if err != nil {
 		return fmt.Errorf("error parseando template: %w", err)
+	}
+
+	// Configurar plantilla en el servicio
+	if ticketPrinter != nil {
+		ticketPrinter.SetTemplate(template)
+		log.Println("✅ Plantilla configurada en el servicio de impresión")
+	} else {
+		return fmt.Errorf("servicio de impresión no inicializado")
 	}
 
 	// Mostrar datos parseados
@@ -137,6 +166,7 @@ func processTemplate(rawData json.RawMessage) error {
 	fmt.Printf("    - Pie:          %q\n", template.CambiarPie)
 
 	printSeparator("-", 80)
+
 	return nil
 }
 
@@ -156,6 +186,19 @@ func processTicket(rawData json.RawMessage) error {
 	ticket, err := models.BytesToTicket(rawData)
 	if err != nil {
 		return fmt.Errorf("error parseando ticket: %w", err)
+	}
+
+	// IMPRIMIR EL TICKET
+	if ticketPrinter != nil {
+		log.Println("🖨️ Enviando ticket a la impresora...")
+
+		if err := ticketPrinter.PrintTicket(ticket); err != nil {
+			return fmt.Errorf("error imprimiendo ticket: %w", err)
+		}
+
+		log.Println("✅ Ticket impreso correctamente")
+	} else {
+		return fmt.Errorf("servicio de impresión no inicializado")
 	}
 
 	// Mostrar datos parseados
@@ -222,6 +265,7 @@ func processTicket(rawData json.RawMessage) error {
 	}
 
 	printSeparator("-", 80)
+
 	return nil
 }
 
@@ -320,6 +364,16 @@ func main() {
 	log.Println("║   Servidor de Impresión de Tickets POS                    ║")
 	log.Println("╚════════════════════════════════════════════════════════════╝")
 	log.Printf("\n🚀 Iniciando servidor en %s\n", listenAddr)
+
+	// Agregar defer para cerrar la impresora
+	defer func() {
+		if ticketPrinter != nil {
+			err := ticketPrinter.Close()
+			if err != nil {
+				return
+			}
+		}
+	}()
 
 	// Configurar servidor de archivos estáticos
 	fileServer := http.FileServer(http.Dir("web/static"))
